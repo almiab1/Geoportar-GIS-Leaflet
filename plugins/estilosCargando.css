@@ -39,7 +39,7 @@ body {
     animation: animateCircle 2s linear infinite;
 }
 
-span {
+.spanRing {
     display: block;
     position: absolute;
     top: calc(50% - 2px);
@@ -50,7 +50,7 @@ span {
     animation: animate 2s linear infinite;
 }
 
-span:before {
+.spanRing:before {
     content: '';
     position: absolute;
     width: 16px;

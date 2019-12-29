@@ -6,6 +6,19 @@
 	<title>Projecto Leaflet - GIS 19/20 - GTI</title>
 	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
+	<!-- Boostrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+	</script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+	</script>
+
 	<!-- Modo carga -->
 	<link rel="stylesheet" href="./plugins/estilosCargando.css">
 
@@ -46,23 +59,50 @@
 		}
 
 		#map {
-			position: absolute;
-			top: 0;
-			bottom: 0;
+			position: fixed;
 			right: 0;
 			left: 0;
+			height: 100%;
 		}
 	</style>
 </head>
 
 <body>
 
-	<div class="ring">
-        <labl>LOADING</labl>
-        <span></span>
+	<div class="d-flex flex-column">
+		<nav class="p-12 navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="#">Projecto GIS 19/20 - GTI</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Acerca de
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item">Esta pagina está hecha por Alejandro Mira Abad</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
 	</div>
-	
-	<!-- <div id="map"></div> -->
+
+	<!-- <div class="ring">
+		<labl>LOADING</labl>
+		<span class="spanRing"></span>
+	</div> -->
+	<main role="main" class="d-flex flex-column">
+		<div class="p-12" id="map"></div>
+	</main>
 
 	<!-- Plugins y librerias leaflet ---------------------------------------------------------------------------------------------------------------------- -->
 	<!-- Chroma -->
@@ -91,7 +131,8 @@
 		var capasTemperaturaMedia = L.layerGroup();
 		anyadirGeotif("./data/temperaturaMediaTIFF.tif", capasTemperaturaMedia, 'Spectral', 'Temperatura: ', ' ºC');
 		var capaPrecipiMediaAnual2007 = L.layerGroup()
-		anyadirGeotif("./data/precipiMediaAnual2007.tif", capaPrecipiMediaAnual2007, ['blue', '#63FFD9'], 'Precipitación: ', ' l/m2');
+		anyadirGeotif("./data/precipiMediaAnual2007.tif", capaPrecipiMediaAnual2007, ['blue', '#63FFD9'], 'Precipitación: ',
+			' l/m2');
 		//----------------------------------------------------------------------------------------------------------------------
 		var gray = L.layerGroup();
 		// more than one service can be grouped together and passed to the control together
@@ -168,14 +209,15 @@
 				var s = L.ScalarField.fromGeoTIFF(buffer);
 				console.log(s.range);
 				let layer = L.canvasLayer.scalarField(s, {
-                    color: chroma.scale(color).mode('lab').domain(s.range.reverse()),
-                    opacity: 0.65
-                }).addTo(layerGroup);
+					color: chroma.scale(color).mode('lab').domain(s.range.reverse()),
+					opacity: 0.65
+				}).addTo(layerGroup);
 				layer.on("click", function (e) {
 					if (e.value !== null) {
 						let popup = L.popup()
 							.setLatLng(e.latlng)
-							.setContent(tituloHtml+`${Math.floor(e.value, -1)}`+unidades+`<br> Posicion: ${e.latlng}`)
+							.setContent(tituloHtml + `${Math.floor(e.value, -1)}` + unidades +
+								`<br> Posicion: ${e.latlng}`)
 							.openOn(map);
 					}
 				});
