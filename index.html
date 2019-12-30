@@ -145,6 +145,7 @@
 		// Cargar los shp
 		//----------------------------------------------------------------------------------------------------------------------
 		// Cargo shp corine_incendios
+		var corine_incendios_layerGroup = new L.layerGroup();
 		var corine_incendios = new L.Shapefile('./data/corine_incendios.zip', {
 			onEachFeature: function (feature, marker) {
 				marker.bindPopup("</h3><i><b>Diametro:</b>" +
@@ -152,6 +153,7 @@
 					feature.properties.Shape_Area);
 			}
 		});
+		corine_incendios.addTo(corine_incendios_layerGroup);
 		//----------------------------------------------------------------------------------------------------------------------
 		var gray = new L.layerGroup();
 		// more than one service can be grouped together and passed to the control together
@@ -172,20 +174,21 @@
 			}
 		}];
 
-		var tifLayers = [{
-			groupName: "Capas TIFF",
-			layers: {
-				"Temperatura Media Anual 2007": capasTemperaturaMedia,
-				"Precipitaciones Media Anual 2007": capaPrecipiMediaAnual2007,
+		var layers = [{
+				groupName: "Capas TIFF",
+				layers: {
+					"Temperatura Media Anual 2007": capasTemperaturaMedia,
+					"Precipitaciones Media Anual 2007": capaPrecipiMediaAnual2007,
+				}
+			},
+			{
+				groupName: "Capas .shp",
+				layers: {
+					"Incendios": corine_incendios_layerGroup,
+				}
 			}
-		}];
+		];
 
-		var shp_layers = [{
-			groupName: "Capas .shp",
-			layers: {
-				"Incendios": corine_incendios,
-			}
-		}];
 		var options = {
 			container_width: "300px",
 			group_maxHeight: "400px",
@@ -193,7 +196,7 @@
 			position: 'topright'
 		};
 
-		var control = L.Control.styledLayerControl(baseLayers, tifLayers, shp_layers, options);
+		var control = L.Control.styledLayerControl(baseLayers, layers, options);
 		map.addControl(control);
 		//----------------------------------------------------------------------------------------------------------------------
 
