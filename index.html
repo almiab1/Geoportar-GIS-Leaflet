@@ -115,17 +115,16 @@
 	<script src="./plugins/d3.v4.min.js" type="text/javascript"></script>
 	<!-- GeoTIFF -->
 	<script src="./plugins/geotiff.js" type="text/javascript"></script>
-
 	<!-- Plugin para el GEOTIF-->
 	<script src="./plugins/leaflet.canvaslayer.field.js" type="text/javascript"></script>
-
 	<!-- Plugin para el minimapa -->
 	<script src="./plugins/control.MiniMap.js" type="text/javascript"></script>
 	<!-- Plugin para medición -->
 	<script src="plugins/leaflet-measure.js"></script>
 	<!-- Plugin Shp -->
 	<script src="./plugins/leaflet.shpfile.js"></script>
-	<script src="./plugins/shp.js"></script>
+	<script src="https://unpkg.com/shpjs@latest/dist/shp.js"></script>
+	<script src="./plugins/catiline.js"></script>
 
 	<!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
@@ -146,17 +145,23 @@
 		//----------------------------------------------------------------------------------------------------------------------
 		// Cargo shp corine_incendios
 		var corine_incendios_layerGroup = new L.layerGroup();
-		var corine_incendios = new L.Shapefile('./data/corine_incendios.zip', {
+		var corine_incendios = new L.Shapefile('OLIVERAS1.zip', {
 			onEachFeature: function (feature, marker) {
-				marker.bindPopup("</h3><i><b>Diametro:</b>" +
-					feature.properties.Shape_Leng + " m <br><b>Area:</b>" +
-					feature.properties.Shape_Area);
+				if (feature.properties) {
+					layer.bindPopup(Object.keys(feature.properties).map(function(k) {
+						return k + ": " + feature.properties[k];
+					}).join("<br />"), {
+						maxHeight: 200
+					});
+				}
 			}
 		});
 		corine_incendios.addTo(corine_incendios_layerGroup);
+		corine_incendios.once("data:loaded", function() {
+			console.log("finished loaded shapefile");
+		});
 		//----------------------------------------------------------------------------------------------------------------------
 		var gray = new L.layerGroup();
-		// more than one service can be grouped together and passed to the control together
 		var baseMapInicial = L.esri.basemapLayer('DarkGray').addTo(gray);
 		L.esri.basemapLayer('GrayLabels').addTo(gray);
 
