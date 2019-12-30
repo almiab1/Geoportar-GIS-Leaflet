@@ -124,7 +124,7 @@
 	<!-- Plugin para medición -->
 	<script src="plugins/leaflet-measure.js"></script>
 	<!-- Plugin Shp -->
-	<script src="./plugins/leaflet.shapefile.js"></script>
+	<script src="./plugins/leaflet.shpfile.js"></script>
 	<script src="./plugins/shp.js"></script>
 
 	<!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
@@ -145,13 +145,13 @@
 		// Cargar los shp
 		//----------------------------------------------------------------------------------------------------------------------
 		// Cargo shp corine_incendios
-		// var corine_incendios = new L.Shapefile('OLIVERAS1.zip', {
-		// 	onEachFeature: function (feature, marker) {
-		// 		marker.bindPopup("</h3><i><b>Diametro:</b>" +
-		// 			feature.properties.Shape_Leng + " m <br><b>Area:</b>" +
-		// 			feature.properties.Shape_Area);
-		// 	}
-		// });
+		var corine_incendios = new L.Shapefile('./data/corine_incendios.zip', {
+			onEachFeature: function (feature, marker) {
+				marker.bindPopup("</h3><i><b>Diametro:</b>" +
+					feature.properties.Shape_Leng + " m <br><b>Area:</b>" +
+					feature.properties.Shape_Area);
+			}
+		});
 		//----------------------------------------------------------------------------------------------------------------------
 		var gray = new L.layerGroup();
 		// more than one service can be grouped together and passed to the control together
@@ -180,12 +180,12 @@
 			}
 		}];
 
-		// var shp_layers = {
-		// 	groupName: "Capas .shp",
-		// 	layers: {
-		// 		"Incendios": corine_incendios,
-		// 	}
-		// };
+		var shp_layers = [{
+			groupName: "Capas .shp",
+			layers: {
+				"Incendios": corine_incendios,
+			}
+		}];
 		var options = {
 			container_width: "300px",
 			group_maxHeight: "400px",
@@ -193,7 +193,7 @@
 			position: 'topright'
 		};
 
-		var control = L.Control.styledLayerControl(baseLayers, tifLayers, options);
+		var control = L.Control.styledLayerControl(baseLayers, tifLayers, shp_layers, options);
 		map.addControl(control);
 		//----------------------------------------------------------------------------------------------------------------------
 
