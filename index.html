@@ -145,7 +145,7 @@
 		//----------------------------------------------------------------------------------------------------------------------
 		// Cargo shp corine_incendios
 		var corine_incendios_layerGroup = new L.layerGroup();
-		var corine_incendios = new L.Shapefile('OLIVERAS1.zip', {
+		var corine_incendios = new L.Shapefile('./data/cuadriculas.zip', {
 			onEachFeature: function (feature, marker) {
 				if (feature.properties) {
 					layer.bindPopup(Object.keys(feature.properties).map(function(k) {
@@ -254,7 +254,6 @@
 			var tiff = url;
 			fetch(tiff).then(r => r.arrayBuffer()).then(function (buffer) {
 				var s = L.ScalarField.fromGeoTIFF(buffer);
-				console.log(s.range);
 				let layer = L.canvasLayer.scalarField(s, {
 					color: chroma.scale(color).mode('lab').domain(s.range.reverse()),
 					opacity: 0.65
