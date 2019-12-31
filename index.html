@@ -157,6 +157,20 @@
 			onEachFeature: (feature, marker) => {}
 		});
 		contornoLluvia.addTo(contornoLluvia_layerGroup); // añado el layer al layerGroup
+		// Cargo shp contorno precipit
+		var puntosTemp_layerGroup = new L.layerGroup(); // Creo el layer group
+		// Leo el shp y lo añado a un layer
+		var puntosTemp = new L.Shapefile("./data/puntosTem.zip", {
+			onEachFeature: (feature, marker) => {
+				marker.bindPopup(`
+                    <h3>Nombre:</h3> ${feature.properties.NOMBRE}
+                    <h3>Temperatura:</h3> ${feature.properties.JUN} ÂºC
+                    <h4>ID de la estaciÃ³n:</h4> ${feature.properties.ID_EST}
+                    <h4>Coordenadas:</h4> ${feature.properties.LAT},${feature.properties.LONG}
+                    `);
+			}
+		});
+		puntosTemp.addTo(puntosTemp_layerGroup); // añado el layer al layerGroup
 		//----------------------------------------------------------------------------------------------------------------------
 		var gray = new L.layerGroup();
 		var baseMapInicial = L.esri.basemapLayer('DarkGray').addTo(gray);
@@ -181,6 +195,7 @@
 				layers: {
 					"Temperatura Media Anual 2007": capasTemperaturaMedia,
 					"Contorno": contornoTemp_layerGroup,
+					"Puntos": puntosTemp_layerGroup,
 				}
 			},
 			{
