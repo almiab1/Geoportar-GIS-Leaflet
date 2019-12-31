@@ -45,7 +45,7 @@
 		crossorigin=""></script>
 
 	<!-- Plugin para Medición areas y distancias-->
-	<link rel="stylesheet" href="./plugins/leaflet-measure.css">
+	<link rel="stylesheet" href="https://ljagis.github.io/leaflet-measure/leaflet-measure.css">
 	<!-- Plugin para el minimapa -->
 	<link rel="stylesheet" href="./plugins/control.MiniMap.css" />
 	<!-- GeoTIFF -->
@@ -54,8 +54,7 @@
 	<link rel="stylesheet" href="./plugins/styledLayerControl.css" />
 	<script src="./plugins/styledLayerControl.js"></script>
 
-	<script src="https://cdn.rawgit.com/calvinmetcalf/shapefile-js/gh-pages/dist/shp.js"></script>
-    <script src="https://cdn.rawgit.com/calvinmetcalf/leaflet.shapefile/gh-pages/leaflet.shpfile.js"></script>
+	<!-- <script src="https://unpkg.com/shpjs@latest/dist/shp.js"></script> -->
 
 	<style>
 		body {
@@ -67,7 +66,7 @@
 			position: fixed;
 			right: 0;
 			left: 0;
-			height: 100%;
+			height: 92%;
 		}
 	</style>
 </head>
@@ -123,8 +122,8 @@
 	<!-- Plugin para medición -->
 	<script src="plugins/leaflet-measure.js" type="text/javascript"></script>
 	<!-- Plugin Shp -->
-	<!-- <script src="./plugins/leaflet.shpfile.js" type="text/javascript"></script>
-	<script src="./plugins/shp.js" type="text/javascript"></script> -->
+	<script src="./plugins/leaflet.shpfile.js" type="text/javascript"></script>
+	<script src="./plugins/shp.js" type="text/javascript"></script>
 	<script src="./plugins/leaflet-providers.js" type="text/javascript"></script>
 
 	<!-- -------------------------------------------------------------------------------------------------------------------------------------------------- -->
@@ -147,22 +146,16 @@
 		// Cargo shp corine_incendios
 		var corine_incendios_layerGroup = new L.layerGroup(); // Creo el layer group
 		// Leo el shp y lo añado a un layer
-		var corine_incendios = new L.Shapefile('./data/cuadriculas.zip', {
-			onEachFeature: function (feature, marker) {
+		var corine_incendios = new L.Shapefile("./data/cuadriculas.zip", {
+			onEachFeature: (feature, marker) => {
 				if (feature.properties) {
-					layer.bindPopup(Object.keys(feature.properties).map(function(k) {
-						return k + ": " + feature.properties[k];
-					}).join("<br />"), {
-						maxHeight: 200
-					});
+					marker.bindPopup(`
+                    <h3>Nombre:</h3> ${feature.properties}
+                    `);
 				}
 			}
-		}); 
-		corine_incendios.addTo(corine_incendios_layerGroup); // añado el layer al layerGroup
-		// Funcion que comprueba si se carga los datos
-		corine_incendios.once("data:loaded", function() {
-			console.log("finished loaded shapefile");
 		});
+		corine_incendios.addTo(corine_incendios_layerGroup); // añado el layer al layerGroup
 		//----------------------------------------------------------------------------------------------------------------------
 		var gray = new L.layerGroup();
 		var baseMapInicial = L.esri.basemapLayer('DarkGray').addTo(gray);
@@ -209,6 +202,30 @@
 		//----------------------------------------------------------------------------------------------------------------------
 
 		//----------------------------------------------------------------------------------------------------------------------
+		// Mini mapa
+		//----------------------------------------------------------------------------------------------------------------------
+		var osm2 = new L.TileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+		var miniMap = new L.Control.MiniMap(osm2, {
+			toggleDisplay: true,
+			zoomLevelOffset: -6
+		}).addTo(map);
+		//----------------------------------------------------------------------------------------------------------------------
+
+		//----------------------------------------------------------------------------------------------------------------------
+		// Barra de medida
+		//----------------------------------------------------------------------------------------------------------------------
+		let measureControl = new L.Control.Measure({
+			position: 'topleft',
+			primaryLengthUnit: 'meters',
+			secondaryLengthUnit: 'kilometers',
+			primaryAreaUnit: 'hectares',
+			activeColor: 'green',
+			completedColor: 'blue'
+		});
+		measureControl.addTo(map);
+		//----------------------------------------------------------------------------------------------------------------------
+
+		//----------------------------------------------------------------------------------------------------------------------
 		// Barra de busqueda
 		//----------------------------------------------------------------------------------------------------------------------
 		var arcgisOnline = L.esri.Geocoding.arcgisOnlineProvider();
@@ -224,30 +241,6 @@
 				})
 			]
 		}).addTo(map);
-		//----------------------------------------------------------------------------------------------------------------------
-
-		//----------------------------------------------------------------------------------------------------------------------
-		// Barra de medida
-		//----------------------------------------------------------------------------------------------------------------------
-		// var measureControl = new L.Control.Measure({
-		// 	position: 'topleft',
-		// 	primaryLengthUnit: 'meters',
-		// 	secondaryLengthUnit: 'kilometers',
-		// 	primaryAreaUnit: 'hectares',
-		// 	activeColor: 'green',
-		// 	completedColor: 'blue'
-		// });
-		// measureControl.addTo(map);
-		//----------------------------------------------------------------------------------------------------------------------
-
-		//----------------------------------------------------------------------------------------------------------------------
-		// Mini mapa
-		//----------------------------------------------------------------------------------------------------------------------
-		// var osm2 = new L.TileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
-		// var miniMap = new L.Control.MiniMap(osm2, {
-		// 	toggleDisplay: true,
-		// 	zoomLevelOffset: -6
-		// }).addTo(map);
 		//----------------------------------------------------------------------------------------------------------------------
 
 		//----------------------------------------------------------------------------------------------------------------------
