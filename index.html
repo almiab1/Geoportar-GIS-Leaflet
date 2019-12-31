@@ -143,10 +143,10 @@
 		//----------------------------------------------------------------------------------------------------------------------
 		// Cargar los shp
 		//----------------------------------------------------------------------------------------------------------------------
-		// Cargo shp corine_incendios
-		var corine_incendios_layerGroup = new L.layerGroup(); // Creo el layer group
+		// Cargo shp contorno temperaturas
+		var contornoTemp_layerGroup = new L.layerGroup(); // Creo el layer group
 		// Leo el shp y lo añado a un layer
-		var corine_incendios = new L.Shapefile("./data/contornoTemp.zip", {
+		var contornoTemp = new L.Shapefile("./data/contornoTemp.zip", {
 			onEachFeature: (feature, marker) => {
 				if (feature.properties) {
 					marker.bindPopup(`
@@ -155,7 +155,20 @@
 				}
 			}
 		});
-		corine_incendios.addTo(corine_incendios_layerGroup); // añado el layer al layerGroup
+		contornoTemp.addTo(contornoTemp_layerGroup); // añado el layer al layerGroup
+		// Cargo shp contorno precipit
+		var contornoLluvia_layerGroup = new L.layerGroup(); // Creo el layer group
+		// Leo el shp y lo añado a un layer
+		var contornoLluvia = new L.Shapefile("./data/contornosPrecip.zip", {
+			onEachFeature: (feature, marker) => {
+				if (feature.properties) {
+					marker.bindPopup(`
+                    <h3>Nombre:</h3> ${feature.properties}
+                    `);
+				}
+			}
+		});
+		contornoLluvia.addTo(contornoLluvia_layerGroup); // añado el layer al layerGroup
 		//----------------------------------------------------------------------------------------------------------------------
 		var gray = new L.layerGroup();
 		var baseMapInicial = L.esri.basemapLayer('DarkGray').addTo(gray);
@@ -176,16 +189,17 @@
 		}];
 
 		var layers = [{
-				groupName: "Capas TIFF",
+				groupName: "Temperaruta Media en España 2007",
 				layers: {
 					"Temperatura Media Anual 2007": capasTemperaturaMedia,
-					"Precipitaciones Media Anual 2007": capaPrecipiMediaAnual2007,
+					"Contorno": contornoTemp_layerGroup,
 				}
 			},
 			{
 				groupName: "Capas .shp",
 				layers: {
-					"Incendios": corine_incendios_layerGroup,
+					"Precipitaciones Media en España 2007": capaPrecipiMediaAnual2007,
+					"Contorno": contornoLluvia_layerGroup,
 				}
 			}
 		];
