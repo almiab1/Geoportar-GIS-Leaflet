@@ -147,26 +147,14 @@
 		var contornoTemp_layerGroup = new L.layerGroup(); // Creo el layer group
 		// Leo el shp y lo añado a un layer
 		var contornoTemp = new L.Shapefile("./data/contornoTemp.zip", {
-			onEachFeature: (feature, marker) => {
-				if (feature.properties) {
-					marker.bindPopup(`
-                    <h3>Nombre:</h3> ${feature.properties}
-                    `);
-				}
-			}
+			onEachFeature: (feature, marker) => {}
 		});
 		contornoTemp.addTo(contornoTemp_layerGroup); // añado el layer al layerGroup
 		// Cargo shp contorno precipit
 		var contornoLluvia_layerGroup = new L.layerGroup(); // Creo el layer group
 		// Leo el shp y lo añado a un layer
 		var contornoLluvia = new L.Shapefile("./data/contornosPrecip.zip", {
-			onEachFeature: (feature, marker) => {
-				if (feature.properties) {
-					marker.bindPopup(`
-                    <h3>Nombre:</h3> ${feature.properties}
-                    `);
-				}
-			}
+			onEachFeature: (feature, marker) => {}
 		});
 		contornoLluvia.addTo(contornoLluvia_layerGroup); // añado el layer al layerGroup
 		//----------------------------------------------------------------------------------------------------------------------
@@ -189,14 +177,14 @@
 		}];
 
 		var layers = [{
-				groupName: "Temperaruta Media en España 2007",
+				groupName: "Temperarutas",
 				layers: {
 					"Temperatura Media Anual 2007": capasTemperaturaMedia,
 					"Contorno": contornoTemp_layerGroup,
 				}
 			},
 			{
-				groupName: "Capas .shp",
+				groupName: "Precipitaciones",
 				layers: {
 					"Precipitaciones Media en España 2007": capaPrecipiMediaAnual2007,
 					"Contorno": contornoLluvia_layerGroup,
