@@ -146,7 +146,7 @@
 		// Cargo shp corine_incendios
 		var corine_incendios_layerGroup = new L.layerGroup(); // Creo el layer group
 		// Leo el shp y lo añado a un layer
-		var corine_incendios = new L.Shapefile("./data/cuadriculas.zip", {
+		var corine_incendios = new L.Shapefile("./data/contornoTemp.zip", {
 			onEachFeature: (feature, marker) => {
 				if (feature.properties) {
 					marker.bindPopup(`
