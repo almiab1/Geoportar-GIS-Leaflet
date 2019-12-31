@@ -163,10 +163,10 @@
 		var puntosTemp = new L.Shapefile("./data/puntosTem.zip", {
 			onEachFeature: (feature, marker) => {
 				marker.bindPopup(`
-                    <h3>Nombre:</h3> ${feature.properties.NOMBRE}
-                    <h3>Temperatura:</h3> ${feature.properties.JUN} ÂºC
-                    <h4>ID de la estaciÃ³n:</h4> ${feature.properties.ID_EST}
-                    <h4>Coordenadas:</h4> ${feature.properties.LAT},${feature.properties.LONG}
+                    <h5>Nombre:</h5> ${feature.properties.NOMBRE}
+                    <h5>Temperatura:</h5> ${feature.properties.JUN} ºC
+                    <h5>ID de la estación:</h5> ${feature.properties.ID_EST}
+                    <h5>Coordenadas:</h5> ${feature.properties.LAT},${feature.properties.LONG}
                     `);
 			}
 		});
