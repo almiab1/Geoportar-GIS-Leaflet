@@ -68,36 +68,55 @@
 			left: 0;
 			height: 92%;
 		}
+
+		#logoCampusGandia {
+			margin-left: 1rem;
+		}
 	</style>
 </head>
 
 <body>
 
-	<div class="d-flex flex-column">
-		<nav class="p-12 navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="#">Projecto GIS 19/20 - GTI</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
+	<nav class="row navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="col-4">
+			<img class="logoCampusGandia" src="./data/img/UPV-gandia-blanco.png" width="150" height="85" class=""
+				alt="Responsive image">
+		</div>
+		<div class="col-6">
+			<h1 class="text-white">Projecto GIS 19/20 - GTI</h1>
+		</div>
+		<div class="col-2 d-flex justify-content-end">
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModal">
+				+Info
 			</button>
+		</div>
+	</nav>
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="d-flex justify-content-end navbar-nav mr-auto">
-					<li class="p-2 nav-item active">
-						<a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
-					</li>
-					<li class="p-2 nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Acerca de
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-info text-white">
+					<h5 class="modal-title" id="exampleModalLabel">Acerca de...</h5>
+					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<label>Projecto GIS 19/20 - GTI</label> <br>
+					<label>
+						Projecto de geoportal en Leaflet para la asignatura 
+						<a href="https://www.upv.es/titulaciones/GTI/menu_1015445c.html">Tecnologías de la información geográfica</a>
+						del
+						<a href="https://www.upv.es/titulaciones/GTI/indexc.html">Grado en Tecnologías Interactivas
 						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item">Esta pagina está hecha por Alejandro Mira Abad</a>
-						</div>
-					</li>
-				</ul>
+					</label> <br>
+					<label>Autor: Alejandro Mira Abad</label>
+				</div>
 			</div>
-		</nav>
+		</div>
 	</div>
 
 	<!-- <div class="ring">
