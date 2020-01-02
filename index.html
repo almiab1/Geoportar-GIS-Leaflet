@@ -320,7 +320,7 @@
 						let popup = L.popup()
 							.setLatLng(e.latlng)
 							.setContent(tituloHtml + `${Math.floor(e.value, -1)}` + unidades +
-								`<br> Posicion: ${e.latlng}`)
+								`<br> Posicion: ${e.latlng.lat} ${e.latlng.lng} `)
 							.openOn(map);
 					}
 				});
