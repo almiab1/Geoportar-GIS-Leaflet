@@ -70,57 +70,61 @@
 </head>
 
 <body>
+	<div class="container-fluid">
+		<div class="grid">
 
-	<nav class="row navbar navbar-expand-lg navbar-dark bg-dark">
-		<div class="col-4">
-			<img src="./data/img/UPV-gandia-blanco.png" width="150" height="85" class="" alt="Responsive image">
-		</div>
-		<div class="col-6">
-			<h1 class="text-white">Projecto GIS 19/20 - GTI</h1>
-		</div>
-		<div class="col-2 d-flex justify-content-end">
-			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModal">
-				+Info
-			</button>
-		</div>
-	</nav>
-
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header bg-info text-white">
-					<h5 class="modal-title" id="exampleModalLabel">Acerca de...</h5>
-					<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
+			<nav class="row navbar navbar-expand-lg navbar-dark bg-dark h-10">
+				<div class="col-5">
+					<img src="./data/img/UPV-gandia-blanco.png" width="150" height="85" class="" alt="Responsive image">
+				</div>
+				<div class="col-6 d-flex align-items-center">
+					<h1 class="text-white">Projecto GIS 19/20 - GTI</h1>
+				</div>
+				<div class="col-1 d-flex justify-content-end">
+					<!-- Button trigger modal -->
+					<button type="button" class="btn btn-info text-white" data-toggle="modal"
+						data-target="#exampleModal">
+						+Info
 					</button>
 				</div>
-				<div class="modal-body">
-					<label>Projecto GIS 19/20 - GTI</label> <br>
-					<label>
-						Projecto de geoportal en Leaflet para la asignatura
-						<a href="https://www.upv.es/titulaciones/GTI/menu_1015445c.html">Tecnologías de la información
-							geográfica</a>
-						del
-						<a href="https://www.upv.es/titulaciones/GTI/indexc.html">Grado en Tecnologías Interactivas
-						</a>
-					</label> <br>
-					<label>Autor: <b>Alejandro Mira Abad</b></label><br>
-					<label>Contacto: <a href="mailito:almiab1@epsg.upv.es">almiab1@epsg.upv.es</a></label>
+			</nav>
+
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+				aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header bg-info text-white">
+							<h5 class="modal-title" id="exampleModalLabel">Acerca de...</h5>
+							<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<label>Projecto GIS 19/20 - GTI</label> <br>
+							<label>
+								Projecto de geoportal en Leaflet para la asignatura
+								<a href="https://www.upv.es/titulaciones/GTI/menu_1015445c.html">Tecnologías de la
+									información
+									geográfica</a>
+								del
+								<a href="https://www.upv.es/titulaciones/GTI/indexc.html">Grado en Tecnologías
+									Interactivas
+								</a>
+							</label> <br>
+							<label>Autor: <b>Alejandro Mira Abad</b></label><br>
+							<label>Contacto: <a href="mailito:almiab1@epsg.upv.es">almiab1@epsg.upv.es</a></label>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 
-	<!-- <div class="ring">
-		<labl>LOADING</labl>
-		<span class="spanRing"></span>
-	</div> -->
-	<main role="main" class="d-flex flex-column">
-		<div class="p-12" id="map"></div>
-	</main>
+			<main role="main" class="row h-90">
+				<div class="col-12" id="map"></div>
+			</main>
+		</div>
+
+	</div>
 
 	<!-- Plugins y librerias leaflet ---------------------------------------------------------------------------------------------------------------------- -->
 	<!-- Chroma -->
