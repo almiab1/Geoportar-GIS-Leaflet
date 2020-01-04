@@ -263,7 +263,13 @@
 					"Precipitaciones Media en España 2007": capaPrecipiMediaAnual2007,
 					"Contorno": contornoLluvia_layerGroup,
 				}
-			}
+			},
+			{
+				groupName: "Incendio de Marxuquera",
+				layers: {
+					"Incendio": corineIncendios_layerGroup,
+				}
+			},
 		];
 
 		var options = {
@@ -274,7 +280,6 @@
 		};
 
 		var control = L.Control.styledLayerControl(baseLayers, layers, options);
-		control.addOverlay(corineIncendios, "Incendio de Marxuquera");
 		map.addControl(control);
 		//----------------------------------------------------------------------------------------------------------------------
 
