@@ -181,6 +181,7 @@
 			onEachFeature: (feature, marker) => {}
 		});
 		contornoLluvia.addTo(contornoLluvia_layerGroup); // añado el layer al layerGroup
+
 		// Cargo shp contorno precipit
 		var puntosTemp_layerGroup = new L.layerGroup(); // Creo el layer group
 		// Leo el shp y lo añado a un layer
@@ -195,6 +196,40 @@
 			}
 		});
 		puntosTemp.addTo(puntosTemp_layerGroup); // añado el layer al layerGroup
+
+		// Cargo shp contorno precipit
+		var corineIncendios_layerGroup = new L.layerGroup(); // Creo el layer group
+		// Leo el shp y lo añado a un layer
+		var corineIncendios = new L.Shapefile("./data/corineIncencio.zip", {
+			onEachFeature: (feature, marker) => {
+				// Para el corine incendio tipos de vegetacion
+				if (feature.properties.DESC_ != null) {
+
+					var color;
+					var area = feature.properties.AREA_HA;
+
+					if (area > 1300) {
+						color = '#229954';
+					} else if (area > 600) {
+						color = '#8E44AD';
+					} else if (area > 110) {
+						color = '#F1C40F';
+					} else if (area > 50) {
+						color = '#33FF64';
+					} else {
+						color = '#D35400';
+					}
+
+					return {
+						fillColor: color,
+						weight: 1,
+						opacity: 1,
+						fillOpacity: 1
+					};
+				}
+			}
+		});
+		corineIncendios.addTo(corineIncendios_layerGroup); // añado el layer al layerGroup
 		//----------------------------------------------------------------------------------------------------------------------
 		var gray = new L.layerGroup();
 		var baseMapInicial = L.esri.basemapLayer('DarkGray').addTo(gray);
@@ -239,6 +274,7 @@
 		};
 
 		var control = L.Control.styledLayerControl(baseLayers, layers, options);
+		control.addOverlay(corineIncendios, "Incendio de Marxuquera");
 		map.addControl(control);
 		//----------------------------------------------------------------------------------------------------------------------
 
@@ -295,7 +331,7 @@
 			]
 		}).addTo(map);
 		//----------------------------------------------------------------------------------------------------------------------
-		
+
 		//----------------------------------------------------------------------------------------------------------------------
 		// Barra escalado
 		//----------------------------------------------------------------------------------------------------------------------
