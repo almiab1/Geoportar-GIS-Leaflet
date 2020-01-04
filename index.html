@@ -54,24 +54,17 @@
 	<!-- Plugin custom layers -->
 	<link rel="stylesheet" href="./plugins/styledLayerControl.css" />
 	<script src="./plugins/styledLayerControl.js"></script>
-	<!-- Plugin Spin -->
-	<link rel="stylesheet" href="./plugins/spin.css" />
-	<script src="./plugins/spin.js"></script>
 	<!-- Plugin para la Impresión -->
 	<link href='http://fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'>
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
 	<style>
-		body {
-			margin: 0;
-			padding: 0;
-		}
-
 		#map {
 			position: fixed;
 			right: 0;
 			left: 0;
-			height: 89%;
+			bottom: 0;
+			height: 90%;
 		}
 	</style>
 </head>
@@ -196,46 +189,6 @@
 			}
 		});
 		puntosTemp.addTo(puntosTemp_layerGroup); // añado el layer al layerGroup
-
-		// Cargo shp contorno precipit
-		var corineIncendios_layerGroup = new L.layerGroup(); // Creo el layer group
-		// Leo el shp y lo añado a un layer
-		var corineIncendios = new L.Shapefile("./data/corineIncencio.zip", {
-			onEachFeature: (feature, marker) => {
-				// Para el corine incendio tipos de vegetacion
-				// if (feature.properties.DESC_ != null) {
-
-				// 	var color;
-				// 	var area = feature.properties.AREA_HA;
-
-				// 	if (area > 1300) {
-				// 		color = '#229954';
-				// 	} else if (area > 600) {
-				// 		color = '#8E44AD';
-				// 	} else if (area > 110) {
-				// 		color = '#F1C40F';
-				// 	} else if (area > 50) {
-				// 		color = '#33FF64';
-				// 	} else {
-				// 		color = '#D35400';
-				// 	}
-
-				// 	return {
-				// 		fillColor: color,
-				// 		weight: 1,
-				// 		opacity: 1,
-				// 		fillOpacity: 1
-				// 	};
-				// }
-
-				let vegetacion = e.layer.feature.properties.DESC_;
-				let area = e.layer.feature.properties.AREA_HA;
-				// Creamos el html
-				html = (vegetacion + '<br />Área (ha): ' + area.toFixed(2))
-				marker.bindPopup(html);
-			}
-		});
-		corineIncendios.addTo(corineIncendios_layerGroup); // añado el layer al layerGroup
 		//----------------------------------------------------------------------------------------------------------------------
 		var gray = new L.layerGroup();
 		var baseMapInicial = L.esri.basemapLayer('DarkGray').addTo(gray);
@@ -269,13 +222,7 @@
 					"Precipitaciones Media en España 2007": capaPrecipiMediaAnual2007,
 					"Contorno": contornoLluvia_layerGroup,
 				}
-			},
-			{
-				groupName: "Incendio de Marxuquera",
-				layers: {
-					"Incendio": corineIncendios_layerGroup,
-				}
-			},
+			}
 		];
 
 		var options = {
@@ -376,12 +323,6 @@
 				map.fitBounds(layer.getBounds());
 			});
 		}
-		//----------------------------------------------------------------------------------------------------------------------
-
-		//----------------------------------------------------------------------------------------------------------------------
-		// Activamos el spin para el mapa
-		//----------------------------------------------------------------------------------------------------------------------
-		map.spin(true);
 		//----------------------------------------------------------------------------------------------------------------------
 	</script>
 
