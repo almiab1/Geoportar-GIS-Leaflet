@@ -162,11 +162,11 @@
 						<label>Proyecto TIG 19/20 - GTI</label> <br>
 						<label>
 							Proyecto de geoportal en Leaflet para la asignatura
-							<a href="https://www.upv.es/titulaciones/GTI/menu_1015445c.html">Tecnologías de la
+							<a href="https://www.upv.es/titulaciones/GTI/menu_1015445c.html" target="_blank">Tecnologías de la
 								información
 								geográfica</a>
 							del
-							<a href="https://www.upv.es/titulaciones/GTI/indexc.html">Grado en Tecnologías
+							<a href="https://www.upv.es/titulaciones/GTI/indexc.html" target="_blank">Grado en Tecnologías
 								Interactivas
 							</a>
 						</label> <br>
@@ -201,6 +201,7 @@
 			onEachFeature: (feature, marker) => {}
 		});
 		contornoTemp.addTo(contornoTemp_layerGroup); // añado el layer al layerGroup
+
 		// Cargo shp contorno precipit
 		var contornoLluvia_layerGroup = new L.layerGroup(); // Creo el layer group
 		// Leo el shp y lo añado a un layer
@@ -223,6 +224,14 @@
 			}
 		});
 		puntosTemp.addTo(puntosTemp_layerGroup); // añado el layer al layerGroup
+
+		// Cargo shp contorno precipit
+		var corine_layerGroup = new L.layerGroup(); // Creo el layer group
+		// Leo el shp y lo añado a un layer
+		var corine = new L.Shapefile("./data/corine.zip", {
+			onEachFeature: (feature, marker) => {}
+		});
+		corine.addTo(corine_layerGroup); // añado el layer al layerGroup
 		//----------------------------------------------------------------------------------------------------------------------
 		var gray = new L.layerGroup();
 		var baseMapInicial = L.esri.basemapLayer('DarkGray').addTo(gray);
@@ -255,6 +264,12 @@
 				layers: {
 					"Precipitaciones Media en España 2007": capaPrecipiMediaAnual2007,
 					"Contorno de precipitaciones medias": contornoLluvia_layerGroup,
+				}
+			},
+			{
+				groupName: "Incendios",
+				layers: {
+					"Corine": cori,
 				}
 			}
 		];
