@@ -232,41 +232,36 @@
 		var corine_layerGroup = new L.layerGroup(); // Creo el layer group
 		// Leo el shp y lo añado a un layer
 		var corine = new L.Shapefile("./data/corine.zip", {
-			style: function (feature) {
-				// Para la repoblacion de Ayora
-				if (feature.properties.Area != null) {
-					var color;
-					var area = feature.properties.Area;
-
-					if (area > 1000) {
-						color = '#229954';
-					} else if (area > 500) {
-						color = '#8E44AD';
-					} else if (area > 100) {
-						color = '#F1C40F';
-					} else if (area > 50) {
-						color = '#00D33A';
-					} else if (area > 10) {
-						color = '#D34300';
-					} else if (area > 5) {
-						color = '#9000D3';
-					} else if (area > 1) {
-						color = '#C6D300';
-					}
-					return {
-						fillColor: color,
-						weight: 1,
-						opacity: 1,
-						fillOpacity: 1
-					};
-				}
-			},
 			onEachFeature: (feature, marker) => {
 				let aptitud = e.layer.feature.properties.Aptitud;
 				let area = e.layer.feature.properties.Area;
 				let html = ('Área (ha): ' + area + '<br/>Aptitud: ' + aptitud);
 
 				marker.bindPopup(htm);
+
+				var color;
+				var area = feature.properties.Area;
+
+				if (area > 1000) {
+					color = '#229954';
+				} else if (area > 500) {
+					color = '#8E44AD';
+				} else if (area > 100) {
+					color = '#F1C40F';
+				} else if (area > 50) {
+					color = '#00D33A';
+				} else if (area > 10) {
+					color = '#D34300';
+				} else if (area > 5) {
+					color = '#9000D3';
+				} else if (area > 1) {
+					color = '#C6D300';
+				}
+
+				fillColor: color;
+				weight: 1;
+				opacity: 1;
+				fillOpacity: 1;
 
 			}
 		});
