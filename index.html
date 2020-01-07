@@ -279,8 +279,9 @@
 		fetch('./data/corine.zip')
 			.then(async function (response, error) {
 
+
 				var corine = new L.shapefile(response.url, {
-					style: function (feature) {
+					style: (feature) => {
 						// Para la repoblacion de Ayora
 						if (feature.properties.Area != null) {
 							var color;
@@ -301,11 +302,12 @@
 							} else if (area > 1) {
 								color = '#C6D300';
 							}
-
-							fillColor: color;
-							weight: 1;
-							opacity: 1;
-							fillOpacity: 1;
+							return {
+								fillColor: color,
+								weight: 1,
+								opacity: 1,
+								fillOpacity: 1
+							};
 						}
 					}
 				});
