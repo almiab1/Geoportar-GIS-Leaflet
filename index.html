@@ -281,33 +281,15 @@
 
 				var corine = L.shapefile(response.url, {
 					style: (feature) => {
-						// Para la repoblacion de Ayora
-						if (feature.properties.Area != null) {
-							var color;
-							var area = feature.properties.Area;
+						return {
+							fillColor: getColorVegetacion(feature.properties.AREA_HA),
+							weight: 1, // Grosor del borde
+							opacity: 1,
+							color: 'white',
+							dashArray: '3',
+							fillOpacity: 0.8
+						};
 
-							if (area > 1000) {
-								color = '#229954';
-							} else if (area > 500) {
-								color = '#8E44AD';
-							} else if (area > 100) {
-								color = '#F1C40F';
-							} else if (area > 50) {
-								color = '#00D33A';
-							} else if (area > 10) {
-								color = '#D34300';
-							} else if (area > 5) {
-								color = '#9000D3';
-							} else if (area > 1) {
-								color = '#C6D300';
-							}
-							return {
-								fillColor: color,
-								weight: 1,
-								opacity: 1,
-								fillOpacity: 1
-							};
-						}
 					}
 				});
 
@@ -317,29 +299,29 @@
 
 				//Popup
 				corine.on('click', function (e) {
-					if (e.value !== null) {
-						let html;
+					// Cogemos el valor
+					let tipo = e.layer.feature.properties.DESC_;
+					let area = e.layer.feature.properties.AREA_HA;
+					// Creamos el html
+					let html = ('<h6>Tipo de vegetación:</h6>' + tipo + '<br/> <h6>Ãrea:</h6> ' + area
+						.toFixed(
+							2) + 'ha');
 
-						// Para repoblación del ayora
-						if (e.layer.feature.properties.Area != null) {
-							// Cogemos el valor
-							let perimetro = e.layer.feature.properties.Perimetro;
-							let area = e.layer.feature.properties.Area;
-							// Creamos el html
-							html = ('Área (ha): ' + area + '<br/>Perimetro: ' + perimetro);
-						}
-
-
-						// Creamos un popup
-						let popup = L.popup()
-							.setLatLng(e.latlng)
-							.setContent(html)
-							.openOn(map);
-					}
+					let popup = L.popup()
+						.setLatLng(e.latlng)
+						.setContent(html)
+						.openOn(map);
 				});
 
 			}); // fetch
 
+		function getColorVegetacion(area) {
+			return area > 400 ? '#253494' :
+				area > 300 ? '#2c7fb8' :
+				area > 200 ? '#41b6c4' :
+				area > 100 ? '#a1dab4' :
+				'#ffffcc';
+		}
 		//----------------------------------------------------------------------------------------------------------------------
 		// Mini mapa
 		//----------------------------------------------------------------------------------------------------------------------
