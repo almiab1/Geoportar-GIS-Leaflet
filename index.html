@@ -232,7 +232,29 @@
 		var corine_layerGroup = new L.layerGroup(); // Creo el layer group
 		// Leo el shp y lo añado a un layer
 		var corine = new L.Shapefile("./data/corine.zip", {
-			onEachFeature: (feature, marker) => {}
+			onEachFeature: (feature, marker) => {
+				var color;
+				var area = feature.properties.AREA_HA;
+
+				if (area > 1300) {
+					color = '#229954';
+				} else if (area > 600) {
+					color = '#8E44AD';
+				} else if (area > 110) {
+					color = '#F1C40F';
+				} else if (area > 50) {
+					color = '#33FF64';
+				} else {
+					color = '#D35400';
+				}
+
+				return {
+					fillColor: color,
+					weight: 1,
+					opacity: 1,
+					fillOpacity: 1
+				};
+			}
 		});
 		corine.addTo(corine_layerGroup);
 		//----------------------------------------------------------------------------------------------------------------------
