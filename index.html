@@ -260,6 +260,29 @@
 				}
 			}
 		});
+
+		corine.on('click', function (e) {
+			if (e.value !== null) {
+				let html;
+
+				// Para repoblación del ayora
+				if (e.layer.feature.properties.Aptitud != null) {
+					// Cogemos el valor
+					let aptitud = e.layer.feature.properties.Aptitud;
+					let area = e.layer.feature.properties.Area;
+					// Creamos el html
+					html = ('Área (ha): ' + area + '<br/>Aptitud: ' + aptitud);
+				}
+
+
+				// Creamos un popup
+				let popup = L.popup()
+					.setLatLng(e.latlng)
+					.setContent(html)
+					.openOn(map);
+			}
+		});
+		
 		corine.addTo(corine_layerGroup);
 		//----------------------------------------------------------------------------------------------------------------------
 		var gray = new L.layerGroup();
