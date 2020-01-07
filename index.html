@@ -315,9 +315,9 @@
                     }
                 }//options
 
-                var corine = L.shapefile(response.url, options).addTo(map);
+                var corine = L.shapefile(response.url, options);
 
-                corine.addBaseLayer(control, "Corine incendio", {groupName : "Incendio"});
+                control.addBaseLayer(corine, "Corine incendio", {groupName : "Incendio"});
 
                 //Popup
                 corine.on('click', function (e) {
