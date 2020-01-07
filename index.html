@@ -233,10 +233,7 @@
 		var corine = new L.Shapefile("./data/corine.zip", {
 			onEachFeature: (feature, marker) => {}
 		});
-		corine.addTo(corine_layerGroup).then(
-			data => {
-				map.fitBounds(corine.getBounds())
-			}); // añado el layer al layerGroup
+		corine.addTo(corine_layerGroup);
 		//----------------------------------------------------------------------------------------------------------------------
 		var gray = new L.layerGroup();
 		var baseMapInicial = L.esri.basemapLayer('DarkGray').addTo(gray);
