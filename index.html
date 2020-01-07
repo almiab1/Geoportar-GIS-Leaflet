@@ -276,70 +276,73 @@
 		map.addControl(control);
 		//----------------------------------------------------------------------------------------------------------------------
 		//Añadir shp combinacion incendio corine
-		fetch('./data/corine.zip')
-			.then(async function (response, error) {
+        fetch('./data/corine.zip')
+            .then(async function (response, error) {
 
-				let optionsLayer = {
-					style: function (feature) {
-						// Para la repoblacion de Ayora
-						var color;
-						var area = feature.properties.Area;
+                let optionsLayer = {
+                    style: function (feature) {
+                        // Para la repoblacion de Ayora
+                        if (feature.properties.Area != null) {
+                            var color;
+                            var area = feature.properties.Area;
 
-						if (area > 1000) {
-							color = '#229954';
-						} else if (area > 500) {
-							color = '#8E44AD';
-						} else if (area > 100) {
-							color = '#F1C40F';
-						} else if (area > 50) {
-							color = '#00D33A';
-						} else if (area > 10) {
-							color = '#D34300';
-						} else if (area > 5) {
-							color = '#9000D3';
-						} else if (area > 1) {
-							color = '#C6D300';
-						}
-						return {
-							fillColor: color,
-							weight: 1,
-							opacity: 1,
-							fillOpacity: 1
-						};
+                            if (area > 1000) {
+                                color = '#229954';
+                            } else if (area > 500) {
+                                color = '#8E44AD';
+                            } else if (area > 100) {
+                                color = '#F1C40F';
+                            }
+                            else if (area > 50) {
+                                color = '#00D33A';
+                            }
+                            else if (area > 10) {
+                                color = '#D34300';
+                            }
+                            else if (area > 5) {
+                                color = '#9000D3';
+                            }
+                            else if (area > 1) {
+                                color = '#C6D300';
+                            }
+                            return {
+                                fillColor: color,
+                                weight: 1,
+                                opacity: 1,
+                                fillOpacity: 1
+                            };
+                        }
+                    }
+                }//options
 
-					}
-				} //options
+                var corine = new L.shapefile(response.url, optionsLayer);
 
-				var corine = L.shapefile(response.url, optionsLayer);
+                control.addOverlay(corine, "Corine incendio", {groupName : "Incendio"});
 
-				control.addOverlay(corine, "Corine incendio", {
-					groupName: "Incendio"
-				});
+                //Popup
+                corine.on('click', function (e) {
+                    if (e.value !== null) {
+                        let html;
 
-				//Popup
-				corine.on('click', function (e) {
-					if (e.value !== null) {
-						let html;
-
-						// Para repoblación del ayora
-						if (e.layer.feature.properties.Area != null) {
-							// Cogemos el valor
-							let perimetro = e.layer.feature.properties.Perimetro;
-							let area = e.layer.feature.properties.Area;
-							// Creamos el html
-							html = ('Área (ha): ' + area + '<br/>Perimetro: ' + perimetro);
-						}
+                        // Para repoblación del ayora
+                        if (e.layer.feature.properties.Area != null) {
+                            // Cogemos el valor
+                            let perimetro = e.layer.feature.properties.Perimetro;
+                            let area = e.layer.feature.properties.Area;
+                            // Creamos el html
+                            html = ('Área (ha): ' + area + '<br/>Perimetro: ' + perimetro);
+                        }
 
 
-						// Creamos un popup
-						let popup = L.popup()
-							.setLatLng(e.latlng)
-							.setContent(html)
-							.openOn(map);
-					}
-				});
+                        // Creamos un popup
+                        let popup = L.popup()
+                            .setLatLng(e.latlng)
+                            .setContent(html)
+                            .openOn(map);
+                    }
+                });
 
-			}); // fetch
+            });// fetch
 
 		//----------------------------------------------------------------------------------------------------------------------
 		// Mini mapa
