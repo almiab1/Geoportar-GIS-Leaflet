@@ -279,8 +279,7 @@
 		fetch('./data/corine.zip')
 			.then(async function (response, error) {
 
-
-				var corine = new L.shapefile(response.url, {
+				var corine = L.shapefile(response.url, {
 					style: (feature) => {
 						// Para la repoblacion de Ayora
 						if (feature.properties.Area != null) {
