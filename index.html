@@ -162,11 +162,13 @@
 						<label>Proyecto TIG 19/20 - GTI</label> <br>
 						<label>
 							Proyecto de geoportal en Leaflet para la asignatura
-							<a href="https://www.upv.es/titulaciones/GTI/menu_1015445c.html" target="_blank">Tecnologías de la
+							<a href="https://www.upv.es/titulaciones/GTI/menu_1015445c.html" target="_blank">Tecnologías
+								de la
 								información
 								geográfica</a>
 							del
-							<a href="https://www.upv.es/titulaciones/GTI/indexc.html" target="_blank">Grado en Tecnologías
+							<a href="https://www.upv.es/titulaciones/GTI/indexc.html" target="_blank">Grado en
+								Tecnologías
 								Interactivas
 							</a>
 						</label> <br>
@@ -229,15 +231,17 @@
 		var corine_layerGroup = new L.layerGroup(); // Creo el layer group
 		// Leo el shp y lo añado a un layer
 		var corine = new L.Shapefile("./data/corine.zip", {
-			onEachFeature: (feature, marker) => {
-				map.fitBounds(corine.getBounds());
-			}
+			onEachFeature: (feature, marker) => {}
 		});
-		corine.addTo(corine_layerGroup); // añado el layer al layerGroup
+		corine.addTo(corine_layerGroup).then(
+			data => {
+				map.fitBounds(corine.getBounds())
+			}); // añado el layer al layerGroup
 		//----------------------------------------------------------------------------------------------------------------------
 		var gray = new L.layerGroup();
 		var baseMapInicial = L.esri.basemapLayer('DarkGray').addTo(gray);
-		L.esri.basemapLayer('GrayLabels').addTo(gray);
+		L.esri.basemapLayer('GrayLabels').addTo(
+			gray);
 
 		var map = L.map('map', {
 			center: [38.996426, -0.165339],
