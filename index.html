@@ -229,7 +229,9 @@
 		var corine_layerGroup = new L.layerGroup(); // Creo el layer group
 		// Leo el shp y lo añado a un layer
 		var corine = new L.Shapefile("./data/corine.zip", {
-			onEachFeature: (feature, marker) => {}
+			onEachFeature: (feature, marker) => {
+				map.fitBounds(corine.getBounds());
+			}
 		});
 		corine.addTo(corine_layerGroup); // añado el layer al layerGroup
 		//----------------------------------------------------------------------------------------------------------------------
