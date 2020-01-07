@@ -228,40 +228,6 @@
 		});
 		puntosTemp.addTo(puntosTemp_layerGroup); // añado el layer al layerGroup
 
-		// Cargo shp contorno precipit
-		var corine_layerGroup = new L.layerGroup(); // Creo el layer group
-		// Leo el shp y lo añado a un layer
-		var corine = new L.Shapefile("./data/corine.zip", {
-			style: function (feature) {
-				// Para el corine incendio tipos de vegetacion
-				if (feature.properties.DESC_ != null) {
-
-					var color;
-					var area = feature.properties.AREA_HA;
-
-					if (area > 1300) {
-						color = '#229954';
-					} else if (area > 600) {
-						color = '#8E44AD';
-					} else if (area > 110) {
-						color = '#F1C40F';
-					} else if (area > 50) {
-						color = '#33FF64';
-					} else {
-						color = '#D35400';
-					}
-
-					return {
-						fillColor: color,
-						weight: 1,
-						opacity: 1,
-						fillOpacity: 1
-					};
-				}
-			}
-		});
-
-		corine.addTo(corine_layerGroup);
 		//----------------------------------------------------------------------------------------------------------------------
 		var gray = new L.layerGroup();
 		var baseMapInicial = L.esri.basemapLayer('DarkGray').addTo(gray);
@@ -296,12 +262,6 @@
 					"Precipitaciones Media en España 2007": capaPrecipiMediaAnual2007,
 					"Contorno de precipitaciones medias": contornoLluvia_layerGroup,
 				}
-			},
-			{
-				groupName: "Incendios",
-				layers: {
-					"Corine": corine_layerGroup,
-				}
 			}
 		];
 
@@ -315,29 +275,75 @@
 		var control = L.Control.styledLayerControl(baseLayers, layers, options);
 		map.addControl(control);
 		//----------------------------------------------------------------------------------------------------------------------
+		//Añadir shp combinacion incendio corine
+        fetch('./data/corine.zip')
+            .then(async function (response, error) {
 
-		corine.on('click', function (e) {
-			if (e.value !== null) {
-				let html;
+                options = {
+                    style: function (feature) {
+                        // Para la repoblacion de Ayora
+                        if (feature.properties.Area != null) {
+                            var color;
+                            var area = feature.properties.Area;
 
-				// Para repoblación del ayora
-				if (e.layer.feature.properties.Aptitud != null) {
-					// Cogemos el valor
-					let aptitud = e.layer.feature.properties.Aptitud;
-					let area = e.layer.feature.properties.Area;
-					// Creamos el html
-					html = ('Área (ha): ' + area + '<br/>Aptitud: ' + aptitud);
-				}
+                            if (area > 1000) {
+                                color = '#229954';
+                            } else if (area > 500) {
+                                color = '#8E44AD';
+                            } else if (area > 100) {
+                                color = '#F1C40F';
+                            }
+                            else if (area > 50) {
+                                color = '#00D33A';
+                            }
+                            else if (area > 10) {
+                                color = '#D34300';
+                            }
+                            else if (area > 5) {
+                                color = '#9000D3';
+                            }
+                            else if (area > 1) {
+                                color = '#C6D300';
+                            }
+                            return {
+                                fillColor: color,
+                                weight: 1,
+                                opacity: 1,
+                                fillOpacity: 1
+                            };
+                        }
+                    }
+                }//options
+
+                var corine = L.shapefile(response.url, options).addTo(map);
+
+                corine.addOverlay(control, "Corine incendio", {groupName : "Incendio"});
+
+                //Popup
+                corine.on('click', function (e) {
+                    if (e.value !== null) {
+                        let html;
+
+                        // Para repoblación del ayora
+                        if (e.layer.feature.properties.Area != null) {
+                            // Cogemos el valor
+                            let perimetro = e.layer.feature.properties.Perimetro;
+                            let area = e.layer.feature.properties.Area;
+                            // Creamos el html
+                            html = ('Área (ha): ' + area + '<br/>Perimetro: ' + perimetro);
+                        }
 
 
-				// Creamos un popup
-				let popup = L.popup()
-					.setLatLng(e.latlng)
-					.setContent(html)
-					.openOn(map);
-			}
-		});
-		
+                        // Creamos un popup
+                        let popup = L.popup()
+                            .setLatLng(e.latlng)
+                            .setContent(html)
+                            .openOn(map);
+                    }
+                });
+
+            });// fetch
+
 		//----------------------------------------------------------------------------------------------------------------------
 		// Mini mapa
 		//----------------------------------------------------------------------------------------------------------------------
