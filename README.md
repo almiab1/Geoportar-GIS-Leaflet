@@ -1,1 +1,7 @@
-Proyecto de geoportal en Leaflet para la asignatura Tecnologías de la información geográfica del Grado en Tecnologías Interactivas
+# Project Leaflet - GIS 19/20 - GTI - UPV
+
+Geoportal project in Leaflet for the Geographic Information Technology course of the Degree in Interactive Technologies
+
+**Link:**
+
+https://almiab1.github.io/Geoportar-GIS-Leaflet/
